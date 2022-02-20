@@ -56,6 +56,11 @@ export class CacheRepository extends DefaultCrudRepository<
     else await this.deleteAll()
   }
 
+
+  /**
+   * this method deletes an item from our cache if the limit of our cache is reached.
+   * it will choose the first item that will be expired.
+  * */
   private async removeOldestIfNeeded(){
     const count = (await this.count()).count
     if (count >= LIMIT) {

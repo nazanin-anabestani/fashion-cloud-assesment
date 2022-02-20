@@ -56,3 +56,11 @@ You can stop the container using the command bellow.
 ```sh
 docker-compose down
 ```
+
+###Important Notes
+* You can set the limit of records saved in cache db using parameter 'CACHE_LIMIT' in docker-compose.yml (the default value set in docker-compose is 1000)
+* If you  are not using docker-compose you can set the parameter 'CACHE_LIMIT' in environment variables otherwise code uses its own default value wich is 100
+* You can set the ttl of records cache db using parameter 'CACHE_TTL_IN_SECONDS' in docker-compose.yml (the default value set in docker-compose is 300 seconds)
+* If you  are not using docker-compose you can set the parameter 'CACHE_TTL_IN_SECONDS' in environment variables otherwise code uses its own default value wich is 300 seconds
+* Check out "cache-repository#removeOldestIfNeeded" method nad its usages to find out the policy of handling the size limit of db
+
