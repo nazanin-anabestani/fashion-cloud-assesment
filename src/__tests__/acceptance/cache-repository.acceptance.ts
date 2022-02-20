@@ -6,7 +6,7 @@ import {CacheRepository} from '../../repositories';
 import {MongodbDataSource} from '../../datasources';
 import {config} from '../db/mongodb.config';
 
-describe('HomePage', () => {
+describe('Cache Repository Unit Tests', () => {
   let app: FashionCloudApplication;
   let cacheRepository : CacheRepository
 

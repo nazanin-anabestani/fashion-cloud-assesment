@@ -3,7 +3,7 @@ import {FashionCloudApplication} from '../..';
 import {setupApplication} from './test-helper';
 import {givenEmptyDatabase} from '../db/database-helper';
 
-describe('CacheController', () => {
+describe('CacheController Integration Tests', () => {
   let app: FashionCloudApplication;
   let client: Client;
 
