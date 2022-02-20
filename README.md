@@ -1,75 +1,58 @@
 # fashion-cloud-nazanin-anabestani
 
-This application is generated using [LoopBack 4 CLI](https://loopback.io/doc/en/lb4/Command-line-interface.html) with the
-[initial project layout](https://loopback.io/doc/en/lb4/Loopback-application-layout.html).
+This application is generated using [LoopBack 4 CLI](https://loopback.io/doc/en/lb4/Command-line-interface.html)
 
-## Install dependencies
+## Running project local
 
-By default, dependencies were installed when this application was generated.
-Whenever dependencies in `package.json` are changed, run the following command:
+This project is build with Node 14 and npm 8.5.0
+### Install dependencies
+
+run the following command to install the dependencies:
 
 ```sh
 npm install
 ```
 
-To only install resolved dependencies in `package-lock.json`:
-
-```sh
-npm ci
-```
-
-## Run the application
-
-```sh
-npm start
-```
-
-You can also run `node .` to skip the build step.
-
-Open http://127.0.0.1:8080 in your browser.
-
-## Rebuild the project
-
-To incrementally build the project:
-
-```sh
-npm run build
-```
-
-To force a full build by cleaning up cached artifacts:
-
-```sh
-npm run rebuild
-```
-
-## Fix code style and formatting issues
-
-```sh
-npm run lint
-```
-
-To automatically fix such issues:
-
-```sh
-npm run lint:fix
-```
-
-## Other useful commands
-
-- `npm run migrate`: Migrate database schemas for models
-- `npm run openapi-spec`: Generate OpenAPI spec into a file
-- `npm run docker:build`: Build a Docker image for this application
-- `npm run docker:run`: Run this application inside a Docker container
-
-## Tests
+### Run the tests
 
 ```sh
 npm test
 ```
 
-## What's next
+### Run the application
 
-Please check out [LoopBack 4 documentation](https://loopback.io/doc/en/lb4/) to
-understand how you can continue to add features to this application.
+```sh
+npm start
+```
 
-[![LoopBack](https://github.com/loopbackio/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png)](http://loopback.io/)
+Open http://127.0.0.1:8080 in your browser.
+
+You can see the two links down there. 
+you can access the open api documents using http://127.0.0.1:8080/openapi.json 
+you also can access the swagger gui using http://127.0.0.1:8080/explorer 
+
+
+## Run project in a container (No need to install mongoDB or fix the Node version)
+
+for this purpose you should have docker installed on your machine.
+
+
+by run the following command, a docker image will be created for your project and another one for mongodb.
+the first time the project docker image is getting build, it will install the dependencies. so it's gonna take some time.
+after building to images they are gonna start running in a docker container.
+if you want to run the process in the background use the command bellow.
+
+```sh
+docker-compose up -d
+```
+
+Otherwise, if you want to check the process you can use the command bellow.
+
+```sh
+docker-compose up
+```
+
+You can stop the container using the command bellow. 
+```sh
+docker-compose down
+```
