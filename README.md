@@ -15,7 +15,11 @@ run the following command to install the dependencies:
 
 ```sh
 npm install
-npm migrate
+```
+### Run build the project
+```sh
+npm run rebuild
+npm run migrate
 ```
 
 ### Run the tests
