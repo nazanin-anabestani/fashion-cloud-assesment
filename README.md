@@ -2,6 +2,10 @@
 
 This application is generated using [LoopBack 4 CLI](https://loopback.io/doc/en/lb4/Command-line-interface.html)
 
+You can run project locally on your machine (with MongoDB installed on your machine) and specific Node version  
+Or you can run it with a docker container without any change on your machine.
+
+
 ## Running project local
 
 This project is build with Node 14 and npm 8.5.0
