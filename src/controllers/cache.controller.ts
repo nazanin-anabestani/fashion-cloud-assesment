@@ -7,17 +7,18 @@ import {CacheResponse} from './response/cache-response';
 export class CacheController {
 
   constructor(
-    @inject(RestBindings.Http.RESPONSE) private response: Response,
+    @inject(RestBindings.Http.RESPONSE) private res: Response,
     @service(CacheService) private cacheService : CacheService,
   ) {}
 
-  @post('/caches')
+  @post('/caches/{key}')
   async addOrUpdate(
+    @param.path.string('key') key: string,
     @requestBody(CreateCacheRequest) request : CreateCacheRequest
   ): Promise<CacheResponse> {
-    let {created, data } = await this.cacheService.addOrUpdate(request.key, request.value);
+    const {created, data } = await this.cacheService.addOrUpdate(key, request.value);
     if (created)
-      this.response.status(201)
+      this.res.status(201)
     return data
   }
 
@@ -32,9 +33,9 @@ export class CacheController {
   async findByKey(
     @param.path.string('key') key: string,
   ): Promise<CacheResponse> {
-    let {created, data } = await this.cacheService.getItem(key)
+    const {created, data } = await this.cacheService.getItem(key)
     if (created)
-      this.response.status(201)
+      this.res.status(201)
     return data
   }
 

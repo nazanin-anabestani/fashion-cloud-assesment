@@ -3,8 +3,8 @@ import {DefaultCrudRepository} from '@loopback/repository';
 import {MongodbDataSource} from '../datasources';
 import {Cache} from '../models';
 
-const TTL = 12;
-const LIMIT = 100;
+const TTL = parseInt(process.env.CACHE_TTL_IN_SECONDS  ?? "300");
+const LIMIT = parseInt(process.env.CACHE_LIMIT ?? "100");
 
 export class CacheRepository extends DefaultCrudRepository<
   Cache,
@@ -20,15 +20,14 @@ export class CacheRepository extends DefaultCrudRepository<
     let created = false
     let cache = await this.findOne({where: {key: key}})
     if (!cache) {
-      this.removeOldestIfNeeded()
+      await this.removeOldestIfNeeded()
       cache = new Cache()
       cache.key = key
       created = true
     }
     cache.value = value
-    cache.expirationDate = new Date(new Date().getTime() + TTL)
-    let toRet = await this.save(cache)
-    return {created : created, data : toRet}
+    cache.expirationDate = new Date(new Date().getTime() + TTL * 1000)
+    return {created : created, data : await this.save(cache)}
   }
 
   async getOrCreate(key : string){
@@ -36,19 +35,19 @@ export class CacheRepository extends DefaultCrudRepository<
     let cache = await this.findOne({where : {key : key}})
     if (!cache) {
       console.log("Cache Miss")
-      this.removeOldestIfNeeded()
+      await this.removeOldestIfNeeded()
       cache = new Cache()
       cache.key = key
       cache.value = Buffer.from(Math.random().toString()).toString("base64").substring(0, 24)
       created = true
     }
     else console.log("Cache Hit")
-    cache.expirationDate = new Date(new Date().getTime() + TTL)
+    cache.expirationDate = new Date(new Date().getTime() + TTL * 1000)
     return {created : created, data : await this.save(cache)}
   }
 
   async getAllData(){
-    return await this.find()
+    return this.find()
   }
 
   async remove(key? : string){
@@ -57,10 +56,10 @@ export class CacheRepository extends DefaultCrudRepository<
     else await this.deleteAll()
   }
 
-  async removeOldestIfNeeded(){
-    let count = (await this.count()).count
+  private async removeOldestIfNeeded(){
+    const count = (await this.count()).count
     if (count >= LIMIT) {
-      let toDelete = await this.find({order: ['expirationDate ASC'], limit: 1})
+      const toDelete = await this.find({order: ['expirationDate ASC'], limit: 1})
       await this.delete(toDelete[0])
     }
   }

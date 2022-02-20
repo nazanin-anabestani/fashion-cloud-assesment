@@ -4,9 +4,8 @@ import {juggler} from '@loopback/repository';
 const config = {
   name: 'mongodb',
   connector: 'mongodb',
-  url: 'mongodb://127.0.0.1:27017/fashion_cloud',
-  host: '127.0.0.1',
-  port: 27017,
+  host: process.env.DATA_STORE_MONGODB_HOST ?? '127.0.0.1',
+  port: process.env.DATA_STORE_MONGODB_PORT  ?? 27017,
   user: '',
   password: '',
   database: 'fashion_cloud',
