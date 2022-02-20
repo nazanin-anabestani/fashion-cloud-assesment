@@ -1,8 +1,14 @@
 import {CacheRepository} from '../../repositories';
 import {MongodbDataSource} from '../../datasources';
-import { MongoMemoryServer } from 'mongodb-memory-server';
+import {MongoMemoryServer} from 'mongodb-memory-server';
 
 export async function givenEmptyDatabase() {
+
+  const cacheRepository = new CacheRepository(await givenEmbeddedDb());
+  await cacheRepository.deleteAll();
+}
+
+export async function givenEmbeddedDb(){
   const mongod = await MongoMemoryServer.create();
   const uri = mongod.getUri();
 
@@ -15,7 +21,6 @@ export async function givenEmptyDatabase() {
     database: 'fashion_cloud',
     useNewUrlParser: true
   };
+  return new MongodbDataSource(config)
 
-  const cacheRepository = new CacheRepository(new MongodbDataSource(config));
-  await cacheRepository.deleteAll();
 }

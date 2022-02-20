@@ -1,10 +1,8 @@
 import {expect} from '@loopback/testlab';
 import {FashionCloudApplication} from '../..';
 import {setupApplication} from './test-helper';
-import {givenEmptyDatabase} from '../db/database-helper';
+import {givenEmbeddedDb, givenEmptyDatabase} from '../db/database-helper';
 import {CacheRepository} from '../../repositories';
-import {MongodbDataSource} from '../../datasources';
-import {config} from '../db/mongodb.config';
 
 describe('Cache Repository Unit Tests', () => {
   let app: FashionCloudApplication;
@@ -12,7 +10,7 @@ describe('Cache Repository Unit Tests', () => {
 
   before('setupApplication', async () => {
     ({app,} = await setupApplication());
-    cacheRepository = new CacheRepository(new MongodbDataSource(config))
+    cacheRepository = new CacheRepository(await givenEmbeddedDb())
   });
 
   beforeEach('setupApplication', async () => {

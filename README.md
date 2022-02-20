@@ -23,6 +23,7 @@ npm install
 npm test
 ```
 
+This command runs some unit tests, and some integration tests using an embedded mongodb.
 ### Run the application
 
 ```sh
